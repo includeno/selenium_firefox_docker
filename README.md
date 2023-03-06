@@ -5,9 +5,9 @@ Running selenium scripts in Docker and Firefox
 
 https://hub.docker.com/repository/docker/includeno/pythonfirefox
 
-# Versions Example
+# Docker Image Usage
 
-get versions by run latest_version_firefox.py
-
-Firefox: Mozilla Firefox 102.8.0esr
-GECKODRIVER_VERSION: 0.30.0
+```
+docker pull includeno/pythonfirefox_example:3.9.16.latest
+docker run includeno/pythonfirefox_example:3.9.16.latest
+```
