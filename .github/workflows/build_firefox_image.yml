@@ -46,7 +46,7 @@ jobs:
       #zip the project files
       - name: Zip project # This would actually build your project, using zip for an example artifact
         run: |
-          zip -q -r firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip .
+          zip -q -r firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip *
       
       - name: check firefox_version
         run:  |
@@ -54,34 +54,12 @@ jobs:
       - name: check geckodriver_version
         run:  |
           echo ${{env.GECKODRIVER_VERSION}}
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1 #https://github.com/actions/create-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
-          release_name: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
-          body: |
-            Changes in this Release
-            - firefox: ${{ env.FIREFOX_ESR_VERSION }}
-            - geckodriver: ${{ env.GECKODRIVER_VERSION }}
-          draft: false
-          prerelease: false
-        continue-on-error: true
-      
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1 #https://github.com/actions/upload-release-asset
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip
-          asset_name: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip
-          asset_content_type: application/zip
-        continue-on-error: true
-      
+      - name: Update the firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }} tag
+        id: update-major-tag
+        uses: ./
+        with: 
+          source-tag: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
+        
       - name: The job has succeeded
         if: ${{ success() }}
         run: echo "新版本发布成功"
