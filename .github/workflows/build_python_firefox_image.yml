@@ -87,7 +87,7 @@ jobs:
   build:
     name: 新版本已建立，构建,发布镜像
     needs: release_python
-    if: ${{ needs.release_python.outputs.my_output == 'success' }}
+    if: ${{ success() }}
     runs-on: ubuntu-latest # use latest ubuntu to run the job
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     strategy:
