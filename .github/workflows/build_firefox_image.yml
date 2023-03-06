@@ -77,10 +77,10 @@ jobs:
       
       - name: The job has succeeded
         if: ${{ success() }}
-        run: echo "新版本发布成功"
+        run: echo "新版本发布成功" exit 0
       - name: The job has succeeded
         if: ${{ failure() }}
-        run: echo "存在版本号相同的版本"
+        run: echo "存在版本号相同的版本" && exit 1
   build:
     name: 新版本已建立，构建,发布镜像
     if: ${{ release.outcome == 'success' }}
