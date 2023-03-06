@@ -61,7 +61,7 @@ jobs:
         id: create_release
         with:
           tag: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
-        continue-on-error: true
+        continue-on-error: false
       
       - name: Upload Release Asset
         id: upload-release-asset
@@ -73,7 +73,7 @@ jobs:
           asset_path: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip
           asset_name: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip
           asset_content_type: application/zip
-        continue-on-error: true
+        continue-on-error: false
       
       - name: The job has succeeded
         if: ${{ success() }}
