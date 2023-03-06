@@ -76,7 +76,7 @@ RUN apt-get update                             \
  && apt-get install -y --no-install-recommends \
     ca-certificates curl firefox-esr           \
  && rm -fr /var/lib/apt/lists/*                \
- && curl -L https://github.com/mozilla/geckodriver/releases/download/${PYTHON_VERSION}/geckodriver-${PYTHON_VERSION}-linux64.tar.gz | tar xz -C /usr/local/bin \
+ && curl -L https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VERSION}/geckodriver-${GECKODRIVER_VERSION}-linux64.tar.gz | tar xz -C /usr/local/bin \
  && apt-get purge -y ca-certificates curl
 
 # 设置无头模式
