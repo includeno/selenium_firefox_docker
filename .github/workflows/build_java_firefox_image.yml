@@ -1,6 +1,6 @@
 # https://docs.github.com/en/actions/guides
 # CI name , it will display on github's action page menu
-name: Build Python+Firefox Image
+name: Build Java Firefox Image
 # trigger on which this CI should be run
 on: # push operation is operate
   push:
@@ -12,7 +12,7 @@ on: # push operation is operate
     types: [published]
 # CI enviroment settings
 env:
-  TAG_NAME: "pythonfirefox"
+  TAG_NAME: "javafirefox"
 jobs:
   release:
     name: 发布新版本
@@ -63,7 +63,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         id: create_release
         with:
-          tag: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
+          tag: java_firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
         continue-on-error: false
       
       - name: Upload Release Asset
@@ -94,7 +94,7 @@ jobs:
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     strategy:
       matrix:
-        python_version: ["3.6", "3.6.15", "3.7", "3.7.16", "3.8", "3.8.16", "3.9", "3.9.16", "3.10" , "3.10.9","3.11","3.11.2"]
+        java_version: ["11.0.16","11.0-jdk","17.0.2-jdk","17.0.2", "17.0-jdk","8u342-jdk","8u342" ]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.9
@@ -127,9 +127,9 @@ jobs:
       - name: check geckodriver_version
         run:  |
           echo ${{env.GECKODRIVER_VERSION}}
-      - name: check python_version
+      - name: check java_version
         run:  |
-          echo ${{matrix.python_version}}
+          echo ${{matrix.java_version}}
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
@@ -141,13 +141,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          file: ./java/Dockerfile
           #构造环境变量传入list https://github.com/docker/build-push-action
           build-args: |
-            PYTHON_VERSION=${{matrix.python_version}}
+            JAVA_VERSION=${{matrix.java_version}}
             FIREFOX_ESR_VERSION=${{env.FIREFOX_ESR_VERSION}}
             GECKODRIVER_VERSION=${{env.GECKODRIVER_VERSION}}
           # tag 不允许出现-
-          tags: "includeno/${{ env.TAG_NAME }}:${{matrix.python_version}}.latest,includeno/${{ env.TAG_NAME }}:${{matrix.python_version}}.firefox${{env.FIREFOX_ESR_VERSION}}"
+          tags: "includeno/${{ env.TAG_NAME }}:${{matrix.java_version}}.latest,includeno/${{ env.TAG_NAME }}:${{matrix.java_version}}.firefox${{env.FIREFOX_ESR_VERSION}}"
           push: true
       - name: The job has succeeded
         if: ${{ success() }}
