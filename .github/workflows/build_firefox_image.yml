@@ -60,8 +60,6 @@ jobs:
         id: create_release
         with:
           tag: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
-          artifacts: "firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip"
-          bodyFile: "firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip"
         continue-on-error: false
       
       - name: Upload Release Asset
