@@ -6,6 +6,6 @@ WORKDIR /app
 ADD . /app
 
 # Install pip requirements
-RUN /bin/sh -c ' cd /app && python -m pip install -r /app/requirements.txt '
+RUN /bin/sh -c ' cd /app && python -m pip install -r requirements.txt '
 
 CMD python main.py
