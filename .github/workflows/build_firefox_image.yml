@@ -17,6 +17,8 @@ jobs:
   release:
     name: 发布新版本
     runs-on: ubuntu-latest # use latest ubuntu to run the job
+    permissions:
+      contents: write
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     steps:
       - uses: actions/checkout@v3
@@ -54,12 +56,26 @@ jobs:
       - name: check geckodriver_version
         run:  |
           echo ${{env.GECKODRIVER_VERSION}}
-      - name: Update the firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }} tag
-        id: update-major-tag
-        uses: ./
-        with: 
-          source-tag: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
-        
+      - uses: ncipollo/release-action@v1
+        id: create_release
+        with:
+          tag: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
+          artifacts: "firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip"
+          bodyFile: "firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip"
+        continue-on-error: false
+      
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1 #https://github.com/actions/upload-release-asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip
+          asset_name: firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}-production.zip
+          asset_content_type: application/zip
+        continue-on-error: false
+      
       - name: The job has succeeded
         if: ${{ success() }}
         run: echo "新版本发布成功"
