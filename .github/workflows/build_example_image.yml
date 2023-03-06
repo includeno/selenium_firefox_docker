@@ -5,7 +5,7 @@ name: Build Example1 Image
 on: # push operation is operate
   push:
     # here since my repository branch is named `main` , you should follow your own repository like `master`
-    branches: [example1]
+    branches: [example_python]
   schedule:
     - cron: "0 0 7 * *"
 # CI enviroment settings
