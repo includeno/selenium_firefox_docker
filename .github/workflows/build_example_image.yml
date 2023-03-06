@@ -1,6 +1,6 @@
 # https://docs.github.com/en/actions/guides
 # CI name , it will display on github's action page menu
-name: Build Python+Firefox Image
+name: Build Example1 Image
 # trigger on which this CI should be run
 on: # push operation is operate
   push:
@@ -8,16 +8,12 @@ on: # push operation is operate
     branches: [example1]
   schedule:
     - cron: "0 0 7 * *"
-  release:
-    types: [published]
 # CI enviroment settings
 env:
   TAG_NAME: "pythonfirefox_example"
 jobs:
   build:
     name: 构建,发布example镜像
-    needs: release
-    if: ${{ needs.release.my_output == 'success' }}
     runs-on: ubuntu-latest # use latest ubuntu to run the job
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     strategy:
