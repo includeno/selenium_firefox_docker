@@ -83,7 +83,7 @@ jobs:
         run: echo "存在版本号相同的版本"
   build:
     name: 新版本已建立，构建,发布镜像
-    if: ${{ success() }}
+    if: ${{ release.outcome == 'success' }}
     runs-on: ubuntu-latest # use latest ubuntu to run the job
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     strategy:
