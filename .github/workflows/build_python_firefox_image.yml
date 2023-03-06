@@ -79,15 +79,15 @@ jobs:
       - name: The job has succeeded
         id: success_step
         if: ${{ steps.create_release.outputs.upload_url }}
-        run: echo "result1=0" >> $GITHUB_OUTPUT && echo "::set-output name=my_output::success"
+        run: echo "my_output=success" >> $GITHUB_OUTPUT
       - name: The job has failed
         id: failure_step
         if: ${{ failure() }}
-        run: echo "result2=1" >> $GITHUB_OUTPUT && echo "::set-output name=my_output::failure" # job1 将失败
+        run: echo "my_output=failure" >> $GITHUB_OUTPUT # job1 将失败
   build:
     name: 新版本已建立，构建,发布镜像
     needs: release_python
-    if: ${{ needs.release_python.my_output == 'success' }}
+    if: ${{ needs.release_python.outputs.my_output == 'success' }}
     runs-on: ubuntu-latest # use latest ubuntu to run the job
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     strategy:
