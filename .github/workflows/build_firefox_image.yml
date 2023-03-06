@@ -45,10 +45,10 @@ jobs:
       
       - name: check firefox_version
         run:  |
-          echo ${{GITHUB_ENV.FIREFOX_ESR_VERSION}}
+          echo ${{env.FIREFOX_ESR_VERSION}}
       - name: check geckodriver
         run:  |
-          echo ${{GITHUB_ENV.GECKODRIVER_VERSION}}
+          echo ${{env.GECKODRIVER_VERSION}}
       - name: check python_version
         run:  |
           echo ${{matrix.python_version}}
