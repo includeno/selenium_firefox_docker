@@ -7,9 +7,9 @@ on: # push operation is operate
     # here since my repository branch is named `main` , you should follow your own repository like `master`
     branches: [main]
   schedule:
-    - cron: "0 0 * * *"
-  release:
-    types: [published]
+    - cron: "0 0 */6 * *"
+  # release:
+  #   types: [published]
 # CI enviroment settings
 env:
   TAG_NAME: "javafirefox"
@@ -17,6 +17,7 @@ jobs:
   release_java:
     name: 发布新版本
     runs-on: ubuntu-latest # use latest ubuntu to run the job
+    if: ${{ github.event_name == 'schedule' || (github.event_name == 'issues' && && github.event.issue.title =~ '^release')}}
     permissions:
       contents: write
     outputs:
@@ -43,7 +44,7 @@ jobs:
       - name: Output Docker info
         run: docker info
       - name: Sets build date
-        run: echo "BUILD_DATE=$(date '+%Y%m%d')" >> $GITHUB_ENV
+        run: echo "BUILD_DATE=$(date '+%Y%m%d_%H:%M:%S')" >> $GITHUB_ENV
       - name: tail from FIREFOX_ESR_VERSION to GITHUB_ENV
         run: tail ./FIREFOX_ESR_VERSION >> $GITHUB_ENV
       - name: set tag GECKODRIVER_VERSION version

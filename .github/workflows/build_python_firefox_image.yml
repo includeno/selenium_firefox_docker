@@ -7,7 +7,9 @@ on: # push operation is operate
     # here since my repository branch is named `main` , you should follow your own repository like `master`
     branches: [main]
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 */6 * *"
+  # release:
+  #   types: [published]
 # CI enviroment settings
 env:
   TAG_NAME: "pythonfirefox"
@@ -15,6 +17,7 @@ jobs:
   release_python:
     name: 发布新版本
     runs-on: ubuntu-latest # use latest ubuntu to run the job
+    if: ${{ github.event_name == 'schedule' || (github.event_name == 'issues' && && github.event.issue.title =~ '^release')}}
     permissions:
       contents: write
     outputs:
