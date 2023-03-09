@@ -17,7 +17,7 @@ jobs:
   release_python:
     name: 发布新版本
     runs-on: ubuntu-latest # use latest ubuntu to run the job
-    if: ${{ github.event_name == 'schedule' || (github.event_name == 'issues' && startsWith(github.event.issue.title,'release'))}}
+    if: ${{ github.event_name == 'push' || github.event_name == 'schedule' || (github.event_name == 'issues' && startsWith(github.event.issue.title,'release'))}}
     permissions:
       contents: write
     outputs:
