@@ -56,10 +56,13 @@ NEW_TAG=args.lang+"_firefox_"+FIREFOX_ESR_VERSION+"_geckodriver_"+GECKODRIVER_VE
 with open('NEW_TAG', 'w') as f:
     f.write(f'NEW_TAG={NEW_TAG}\n')
 
-print("IS_NEW:", current_tag==NEW_TAG)
+IS_NEW=False
 if(current_tag==NEW_TAG):
+    IS_NEW=False
     with open('IS_NEW', 'w') as f:
         f.write(f'IS_NEW={False}\n')
 else:
+    IS_NEW=True
     with open('IS_NEW', 'w') as f:
         f.write(f'IS_NEW={True}\n')
+print("IS_NEW:", IS_NEW)
