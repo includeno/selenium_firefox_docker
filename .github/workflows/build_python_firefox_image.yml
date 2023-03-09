@@ -70,7 +70,7 @@ jobs:
         if: ${{ steps.version.outputs.IS_NEW=='True' }}
         id: create_release
         with:
-          tag: python_firefox_${{ env.FIREFOX_ESR_VERSION }}_geckodriver_${{ env.GECKODRIVER_VERSION }}
+          tag: ${{ env.NEW_TAG }}
         continue-on-error: false
       
       - name: Upload Release Asset
@@ -113,11 +113,6 @@ jobs:
       - uses: actions/checkout@v3
       # here are some step followed , each step must have `uses` or `run` key , for CI to run
       # other key like `name`,`with`,`env` is optional
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pytest requests
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Output Docker info
         run: docker info
       - name: Sets build date
@@ -143,7 +138,7 @@ jobs:
             FIREFOX_ESR_VERSION=${{env.FIREFOX_ESR_VERSION}}
             GECKODRIVER_VERSION=${{env.GECKODRIVER_VERSION}}
           # tag 不允许出现-
-          tags: "includeno/${{ env.TAG_NAME }}:${{matrix.python_version}}.latest,includeno/${{ env.TAG_NAME }}:${{matrix.python_version}}.firefox${{env.FIREFOX_ESR_VERSION}}"
+          tags: "${{ secrets.DOCKER_USERNAME }}/${{ env.TAG_NAME }}:${{matrix.python_version}}.latest,${{ secrets.DOCKER_USERNAME }}/${{ env.TAG_NAME }}:${{matrix.python_version}}.firefox${{env.FIREFOX_ESR_VERSION}}"
           push: true
       - name: The job has succeeded
         if: ${{ success() }}
