@@ -51,10 +51,12 @@ def get_tag_by_lang(lang):
     return ""
 
 current_tag=get_tag_by_lang(args.lang)
+print("Current Tag: ", current_tag)
 NEW_TAG=args.lang+"_firefox_"+FIREFOX_ESR_VERSION+"_geckodriver_"+GECKODRIVER_VERSION
 with open('NEW_TAG', 'w') as f:
     f.write(f'NEW_TAG={NEW_TAG}\n')
 
+print("IS_NEW:", current_tag==NEW_TAG)
 if(current_tag==NEW_TAG):
     with open('IS_NEW', 'w') as f:
         f.write(f'IS_NEW={False}\n')
