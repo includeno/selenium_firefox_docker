@@ -32,6 +32,10 @@ GECKODRIVER_VERSION=get_latest_geckodriver_version()
 with open('GECKODRIVER_VERSION', 'w') as f:
     f.write(f'GECKODRIVER_VERSION={GECKODRIVER_VERSION}\n')
 
+with open('FIREFOX_ESR_VERSION', 'w') as f:
+    f.write(f'FIREFOX_ESR_VERSION={FIREFOX_ESR_VERSION}\n')
+
+
 argparse.ArgumentParser(description='Get the latest version of the specified language')
 parser = argparse.ArgumentParser()
 parser.add_argument('--lang', type=str, default='python', help='language')
