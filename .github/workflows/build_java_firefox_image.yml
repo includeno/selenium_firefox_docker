@@ -111,6 +111,37 @@ jobs:
           NEW_TAG: ${{needs.release_python.outputs.NEW_TAG}}
         run: echo "FIREFOX_ESR_VERSION $FIREFOX_ESR_VERSION GECKODRIVER_VERSION $GECKODRIVER_VERSION"
       - uses: actions/checkout@v3
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      # here are some step followed , each step must have `uses` or `run` key , for CI to run
+      # other key like `name`,`with`,`env` is optional
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest requests
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Get latest version
+        run: |
+          python -m pip install requests
+          python latest_version_firefox.py --lang python
+      - name: Output Docker info
+        run: docker info
+      - name: Sets build date
+        run: echo "BUILD_DATE=$(date '+%Y%m%d')" >> $GITHUB_ENV
+      - name: SET VERSION to GITHUB
+        id: version
+        run: |
+          tail ./FIREFOX_ESR_VERSION >> $GITHUB_OUTPUT
+          tail ./GECKODRIVER_VERSION >> $GITHUB_OUTPUT
+          tail ./IS_NEW >> $GITHUB_OUTPUT
+          tail ./NEW_TAG >> $GITHUB_OUTPUT
+
+          tail ./FIREFOX_ESR_VERSION >> $GITHUB_ENV
+          tail ./GECKODRIVER_VERSION >> $GITHUB_ENV
+          tail ./IS_NEW >> $GITHUB_ENV
+          tail ./NEW_TAG >> $GITHUB_ENV
       - name: Output Docker info
         run: docker info
       - name: Sets build date
