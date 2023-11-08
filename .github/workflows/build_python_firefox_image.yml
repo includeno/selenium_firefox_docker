@@ -102,7 +102,7 @@ jobs:
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     strategy:
       matrix:
-        python_version: ["3.6", "3.6.15", "3.7", "3.7.16", "3.8", "3.8.16", "3.9", "3.9.16", "3.10" , "3.10.9","3.11","3.11.2"]
+        python_version: ["3.6", "3.6.15", "3.7", "3.7.17", "3.8", "3.8.18", "3.9", "3.9.18", "3.10" , "3.10.13","3.11","3.11.6","3.12"]
     steps:
       - env:
           FIREFOX_ESR_VERSION: ${{needs.release_python.outputs.FIREFOX_ESR_VERSION}}
