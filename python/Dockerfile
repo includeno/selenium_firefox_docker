@@ -1,5 +1,5 @@
 ARG  PYTHON_VERSION=3.9.16
-FROM python:${PYTHON_VERSION}-slim
+FROM python:${PYTHON_VERSION}-slim-bookworm
 
 WORKDIR /app
 
