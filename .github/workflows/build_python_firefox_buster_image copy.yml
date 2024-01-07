@@ -102,7 +102,7 @@ jobs:
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     strategy:
       matrix:
-        python_version: ["3.8", "3.8.18", "3.9", "3.9.18", "3.10" , "3.10.13","3.11","3.11.7","3.12"]
+        python_version: ["3.6", "3.6.15", "3.7", "3.7.17", "3.8", "3.8.17", "3.9", "3.9.17", "3.10" , "3.10.9", "3.11", "3.11.4"]
     steps:
       - env:
           FIREFOX_ESR_VERSION: ${{needs.release_python.outputs.FIREFOX_ESR_VERSION}}
@@ -162,7 +162,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./python/Dockerfile
+          file: ./python/Dockerfile-slim-buster
           #构造环境变量传入list https://github.com/docker/build-push-action
           build-args: |
             PYTHON_VERSION=${{matrix.python_version}}
