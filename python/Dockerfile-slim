@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
     libbrotli1 \
     libc6 \
     libexpat1 \
-    libflac8 \
+    # libflac8 \
     libfontconfig1 \
     libfreetype6 \
     libjpeg62-turbo \
@@ -38,7 +38,7 @@ RUN apt-get update && apt-get install -y \
     libpulse0 \
     libsnappy1v5 \
     libstdc++6 \
-    libwebp6 \
+    # libwebp6 \
     libwebpdemux2 \
     libwebpmux3 \
     libwoff1  \
@@ -67,7 +67,10 @@ RUN apt-get update && apt-get install -y \
     libgdk-pixbuf2.0-0 \
     libglib2.0-0 \
     libpango-1.0-0 \
-    libxshmfence1
+    libxshmfence1 \
+    libdbus-glib-1-2 \
+    libevent-2.1-7 \
+    libvpx7
 
 ARG  GECKODRIVER_VERSION=v0.32.2
 
