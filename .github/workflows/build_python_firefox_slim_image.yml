@@ -24,7 +24,7 @@ jobs:
       FIREFOX_ESR_VERSION: ${{ steps.version.outputs.FIREFOX_ESR_VERSION }}
       GECKODRIVER_VERSION: ${{ steps.version.outputs.GECKODRIVER_VERSION }}
       IS_NEW: ${{ steps.version.outputs.IS_NEW }}
-      NEW_TAG: ${{ steps.version.outputs.NEW_TAG }}
+      NEW_TAG: ${{ steps.version.outputs.NEW_TAG }}-slim
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     steps:
       - uses: actions/checkout@v3
