@@ -69,8 +69,7 @@ RUN apt-get update && apt-get install -y \
     libpango-1.0-0 \
     libxshmfence1 \
     libdbus-glib-1-2 \
-    libevent-2.1-7 \
-    libvpx7
+    libevent-2.1-7
 
 ARG  GECKODRIVER_VERSION=v0.32.2
 
