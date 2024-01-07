@@ -1,5 +1,5 @@
 ARG  JAVA_VERSION=11.0-jdk
-FROM openjdk:${JAVA_VERSION}-slim
+FROM openjdk:${JAVA_VERSION}-slim-buster
 
 WORKDIR /app
 
