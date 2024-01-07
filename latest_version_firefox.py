@@ -39,6 +39,7 @@ with open('FIREFOX_ESR_VERSION', 'w') as f:
 argparse.ArgumentParser(description='Get the latest version of the specified language')
 parser = argparse.ArgumentParser()
 parser.add_argument('--lang', type=str, default='python', help='language')
+parser.add_argument('--tag', type=str, default='slim-buster', help='tag')
 args = parser.parse_args()
 
 def get_tag_by_lang(lang):
@@ -56,7 +57,7 @@ def get_tag_by_lang(lang):
 
 current_tag=get_tag_by_lang(args.lang)
 print("Current Tag: ", current_tag)
-NEW_TAG=args.lang+"_firefox_"+FIREFOX_ESR_VERSION+"_geckodriver_"+GECKODRIVER_VERSION
+NEW_TAG=args.lang+"_firefox_"+FIREFOX_ESR_VERSION+"_geckodriver_"+GECKODRIVER_VERSION+"_"+args.tag
 with open('NEW_TAG', 'w') as f:
     f.write(f'NEW_TAG={NEW_TAG}\n')
 

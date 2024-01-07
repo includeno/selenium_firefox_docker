@@ -42,7 +42,7 @@ jobs:
       - name: Get latest version
         run: |
           python -m pip install requests
-          python latest_version_firefox.py --lang python
+          python latest_version_firefox.py --lang python --tag slim-buster
       - name: Output Docker info
         run: docker info
       - name: Sets build date
